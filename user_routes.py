@@ -13,7 +13,9 @@ def get_records_router(
     request: Request,
     session_user: Session = Depends(db_session)):
     try:
+        print("STARTED", request)
         req_json = request.query_params
+        print("USER PARAM", req_json)
         get_res = get_user(req_json, session_user)
         return JSONResponse(f"{get_res}")
     except Exception as e:
