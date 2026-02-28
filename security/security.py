@@ -44,8 +44,8 @@ def read_keys():
     return pu_key, pr_key
 
 
-pu, pr = read_keys()
-enc = encrypting_password("jayname.   isds   ##2 dmine", pu)
-print(f"----------------{enc}")
-dec = decrypting_paramter(enc, pr)
-print(f"----------------{dec}")
+# pu, pr = read_keys()
+# enc = encrypting_password("jayname.   isds   ##2 dmine", pu)
+# print(f"----------------{enc}")
+# dec = decrypting_paramter(enc, pr)
+# print(f"----------------{dec}")
