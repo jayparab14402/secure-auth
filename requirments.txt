@@ -2,4 +2,4 @@ boto3
 pycryptodome
 sqlalchemy
 fastapi
-uvicorn["global"]
+uvicorn
