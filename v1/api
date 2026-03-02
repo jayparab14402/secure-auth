@@ -1,0 +1,5 @@
+from fastapi import FastAPI, APIRouter
+from user_routes import sub_router 
+
+
+api_router = APIRouter()
