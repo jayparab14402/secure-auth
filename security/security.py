@@ -3,6 +3,20 @@ from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 import traceback
 
+def read_keys():
+    with open(r"public_pem.pem") as pu_file:
+        read_pu = pu_file.read()
+        if not read_pu:
+            raise ValueError("Public key file is empty")
+    pu_key = RSA.import_key(read_pu)
+
+    with open(r"private_pem.pem") as pr_file:
+        read_pr = pr_file.read()
+        if not read_pr:
+            raise ValueError("Private key file is empty")
+    pr_key = RSA.import_key(read_pr)
+
+    return pu_key, pr_key
 
 def encrypting_password(parameter, public_key):
     try:
@@ -28,21 +42,7 @@ def decrypting_paramter(paramater, private_key):
         print(f"Error in Decrypting Password:- {traceback.format_exc()}")
         return None
 
-def read_keys():
-    with open(r"public_pem.pem") as pu_file:
-        read_pu = pu_file.read()
-        if not read_pu:
-            raise ValueError("Public key file is empty")
-    pu_key = RSA.import_key(read_pu)
-
-    with open(r"private_pem.pem") as pr_file:
-        read_pr = pr_file.read()
-        if not read_pr:
-            raise ValueError("Private key file is empty")
-    pr_key = RSA.import_key(read_pr)
-
-    return pu_key, pr_key
-
+public_key, private_key = read_keys()
 
 # pu, pr = read_keys()
 # enc = encrypting_password("jayname.   isds   ##2 dmine", pu)

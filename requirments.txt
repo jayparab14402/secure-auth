@@ -3,3 +3,6 @@ pycryptodome
 sqlalchemy
 fastapi
 uvicorn
+psycopg2-binary
+dotenv
+'pydantic[email]'

@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 import os
-from user_routes import sub_router
+# from user_routes import sub_router
+from api.v1.api import app_router
 
 # load_dotenv()
 # env_val = os.environ['X-API-KEY'] 
@@ -20,7 +21,9 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-app.include_router(sub_router, prefix="/auth/user")
+# app.include_router(sub_router, prefix="/auth/user")
+app.include_router(app_router, prefix="/auth/user")
+
 
 @app.get("/")
 def root():

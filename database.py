@@ -14,5 +14,6 @@ def db_session():
         yield db
     except Exception as e:
         print(f"Error in creating db connection: {traceback.format_exc()}")
+        raise
     finally:
         db.close()
