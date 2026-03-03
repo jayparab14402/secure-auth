@@ -25,3 +25,10 @@ class UserCreate(BaseModel):
     username: str
     full_name: str | None = None
     password: str
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+class LoginResponse(BaseModel):
+    resp: str

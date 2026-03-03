@@ -1,9 +1,9 @@
-from models import User
+from models import User, Role
 # from database import db_session
 from fastapi import HTTPException, status
 from security.security import encrypting_password, decrypting_paramter, public_key
 from datetime import datetime as dt
-
+from sqlalchemy.orm import Session
 class Users:
     """Get user by email"""
     def check_user_by_email(db, email):
@@ -20,7 +20,7 @@ class Users:
             
             return db.query(User).filter(User.id == user_id).first()
     """Create new user"""
-    def create_user(user_data, db):
+    def create_user(user_data, db: Session):
         print("Inside create user")
         if Users.check_user_by_email(db, user_data.email):
               raise HTTPException(
@@ -49,8 +49,13 @@ class Users:
               created_at = dt.now(),
               updated_at = dt.now()
         )
+
+        user_roles = db.query(Role).filter(Role.name == "user").first()
+        if user_roles:
+              db_record.roles.append(user_roles)
         db.add(db_record)
         db.commit()
+        db.refresh(db_record)
         print("Record Commited")
         return db_record
 
