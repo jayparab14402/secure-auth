@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from database import db_session
 from services.userservice import Users
@@ -31,8 +31,19 @@ def register_user(user_data: UserCreate, response_model=UserResponse,  db: Sessi
 
 @router.post("/login", response_model=LoginResponse)
 def login(login_request: LoginRequest, db: Session = Depends(db_session)):
-    check = AuthService.authenticate_user(db, login_request.email, login_request.password)
-    print(f"RESPONSE {check}")
-    return LoginResponse(
-        resp="ok ho gaya hai ji"
-    )
+    check_user_status = AuthService.authenticate_user(db, login_request.email, login_request.password)
+    print(f"RESPONSE {check_user_status}")
+
+    if not check_user_status:
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if not check_user_status.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Inactive user"
+        )
+    
